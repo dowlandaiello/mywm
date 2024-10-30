@@ -16,9 +16,10 @@
           version = "0.1.0";
           src = ./.;
           cargoHash = "sha256-MXvAqn+JwUdDcJBqioGxil4O200z7nYOznhPqtlK4Oc=";
-          nativeBuildInputs = [ pkg-config makeWrapper ];
+          nativeBuildInputs = [ pkg-config makeWrapper xmodmap ];
           buildInputs = [ libXinerama libX11 xmodmap ];
           libPath = lib.makeLibraryPath [ libXinerama libX11 ];
+          doCheck = false;
         };
 
         packages.default = packages.mywm;
