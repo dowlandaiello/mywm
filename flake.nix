@@ -15,13 +15,19 @@
           pname = "mywm";
           version = "0.1.0";
           src = ./.;
-          cargoHash = lib.fakeHash;
+          cargoHash = "sha256-MXvAqn+JwUdDcJBqioGxil4O200z7nYOznhPqtlK4Oc=";
           nativeBuildInputs = [ pkg-config makeWrapper ];
-          buildInputs = [ libXinerama libX11 ];
+          buildInputs = [ libXinerama libX11 xmodmap ];
           libPath = lib.makeLibraryPath [ libXinerama libX11 ];
         };
 
         packages.default = packages.mywm;
+
+        devShells.default = pkgs.mkShell {
+          nativeBuildInputs = [ pkg-config makeWrapper ];
+          buildInputs = [ libXinerama libX11 xmodmap ];
+          libPath = lib.makeLibraryPath [ libXinerama libX11 ];
+        };
       });
 }
 

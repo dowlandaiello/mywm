@@ -23,18 +23,19 @@ const TERM: &str = "alacritty";
 const TAGS: [&str; 9] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
-    let mut raw_bindings = map! {
-        map_keys: |k: &str| k.to_string();
+    let mut raw_bindings = {
+        let mut h = HashMap::new();
+        h.insert("M-n".to_owned(), modify_with(|cs| cs.focus_down()));
+        h.insert("M-p".to_owned(), modify_with(|cs| cs.focus_up()));
+        h.insert("M-S-n".to_owned(), modify_with(|cs| cs.swap_down()));
+        h.insert("M-S-p".to_owned(), modify_with(|cs| cs.swap_up()));
+        h.insert("M-S-c".to_owned(), modify_with(|cs| cs.kill_focused()));
+        h.insert("M-Tab".to_owned(), modify_with(|cs| cs.toggle_tag()));
+        h.insert("M-S-space".to_owned(), spawn("menu_run"));
+        h.insert("M-Return".to_owned(), spawn(TERM));
+        h.insert("M-S-q".to_owned(), exit());
 
-        "M-n" => modify_with(|cs| cs.focus_down()),
-        "M-p" => modify_with(|cs| cs.focus_up()),
-        "M-S-n" => modify_with(|cs| cs.swap_down()),
-        "M-S-p" => modify_with(|cs| cs.swap_up()),
-        "M-S-c" => modify_with(|cs| cs.kill_focused()),
-        "M-Tab" => modify_with(|cs| cs.toggle_tag()),
-        "M-S-Space" => spawn("dmenu_run"),
-        "M-Return" => spawn(TERM),
-        "M-S-q" => exit(),
+        h
     };
 
     for tag in TAGS.iter() {
