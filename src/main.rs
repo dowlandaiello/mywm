@@ -31,7 +31,7 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
         h.insert("M-S-p".to_owned(), modify_with(|cs| cs.swap_up()));
         h.insert("M-S-c".to_owned(), modify_with(|cs| cs.kill_focused()));
         h.insert("M-Tab".to_owned(), modify_with(|cs| cs.toggle_tag()));
-        h.insert("M-S-space".to_owned(), spawn("menu_run"));
+        h.insert("C-S-space".to_owned(), spawn("dmenu_run"));
         h.insert("M-Return".to_owned(), spawn(TERM));
         h.insert("M-S-q".to_owned(), exit());
 
