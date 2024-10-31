@@ -44,11 +44,11 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
         h.insert("M-S-q".to_owned(), exit());
         h.insert("M-F".to_owned(), toggle_fullscreen());
         h.insert(
-            "M-bracketleft".to_owned(),
+            "M-z".to_owned(),
             key_handler(move |_, _| spawn_with_args(FLAMESHOT, &FLAMESHOT_FULL_ARGS)),
         );
         h.insert(
-            "M-bracketright".to_owned(),
+            "M-x".to_owned(),
             key_handler(move |_, _| spawn_with_args(FLAMESHOT, &FLAMESHOT_GUI_ARGS)),
         );
 
