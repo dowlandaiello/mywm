@@ -16,7 +16,7 @@ use penrose::{
     },
     extensions::{actions::toggle_fullscreen, hooks::ewmh::add_ewmh_hooks},
     map,
-    util::spawn_with_args,
+    util::spawn_for_output_with_args,
     x11rb::RustConn,
     Result,
 };
@@ -33,7 +33,7 @@ const FLAMESHOT_GUI_ARGS: [&str; 3] = ["gui", "-p", "~/Pictures/screenshots"];
 fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
     let mut raw_bindings = {
         let mut h = HashMap::new();
-        /*h.insert("M-n".to_owned(), modify_with(|cs| cs.focus_down()));
+        h.insert("M-n".to_owned(), modify_with(|cs| cs.focus_down()));
         h.insert("M-p".to_owned(), modify_with(|cs| cs.focus_up()));
         h.insert("M-S-n".to_owned(), modify_with(|cs| cs.swap_down()));
         h.insert("M-S-p".to_owned(), modify_with(|cs| cs.swap_up()));
@@ -42,14 +42,22 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
         h.insert("C-S-space".to_owned(), spawn(LAUNCHER));
         h.insert("M-Return".to_owned(), spawn(TERM));
         h.insert("M-S-q".to_owned(), exit());
-        h.insert("M-F".to_owned(), toggle_fullscreen());*/
+        h.insert("M-F".to_owned(), toggle_fullscreen());
         h.insert(
-            "M-n".to_owned(),
-            key_handler(move |_, _| spawn_with_args(FLAMESHOT, &FLAMESHOT_FULL_ARGS)),
+            "M-z".to_owned(),
+            key_handler(move |_, _| {
+                spawn_for_output_with_args(FLAMESHOT, &FLAMESHOT_FULL_ARGS)
+                    .map(|__| ())
+                    .map_err(|e| e.into())
+            }),
         );
         h.insert(
-            "M-p".to_owned(),
-            key_handler(move |_, _| spawn_with_args(FLAMESHOT, &FLAMESHOT_GUI_ARGS)),
+            "M-x".to_owned(),
+            key_handler(move |_, _| {
+                spawn_for_output_with_args(FLAMESHOT, &FLAMESHOT_GUI_ARGS)
+                    .map(|_| ())
+                    .map_err(|e| e.into())
+            }),
         );
 
         h
