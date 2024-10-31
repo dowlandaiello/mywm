@@ -98,7 +98,7 @@ fn main() -> Result<()> {
         outer_px: 0,
         inner_px: 0,
         top_px: 0,
-        bottom_px: 30,
+        bottom_px: 31,
     });
 
     let conn = RustConn::new()?;
