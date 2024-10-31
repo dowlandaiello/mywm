@@ -27,8 +27,8 @@ const TERM: &str = "alacritty";
 const LAUNCHER: &str = "mydmenu_run";
 const TAGS: [&str; 9] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const FLAMESHOT: &str = "flameshot";
-const FLAMESHOT_FULL_ARGS: [&str; 4] = ["flameshot", "full", "-p", "~/Pictures/screenshots"];
-const FLAMESHOT_GUI_ARGS: [&str; 4] = ["flameshot", "gui", "-p", "~/Pictures/screenshots"];
+const FLAMESHOT_FULL_ARGS: [&str; 3] = ["full", "-p", "~/Pictures/screenshots"];
+const FLAMESHOT_GUI_ARGS: [&str; 3] = ["gui", "-p", "~/Pictures/screenshots"];
 
 fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
     let mut raw_bindings = {
