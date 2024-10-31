@@ -33,7 +33,7 @@ const FLAMESHOT_GUI_ARGS: [&str; 3] = ["gui", "-p", "~/Pictures/screenshots"];
 fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
     let mut raw_bindings = {
         let mut h = HashMap::new();
-        h.insert("M-n".to_owned(), modify_with(|cs| cs.focus_down()));
+        /*h.insert("M-n".to_owned(), modify_with(|cs| cs.focus_down()));
         h.insert("M-p".to_owned(), modify_with(|cs| cs.focus_up()));
         h.insert("M-S-n".to_owned(), modify_with(|cs| cs.swap_down()));
         h.insert("M-S-p".to_owned(), modify_with(|cs| cs.swap_up()));
@@ -42,13 +42,13 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
         h.insert("C-S-space".to_owned(), spawn(LAUNCHER));
         h.insert("M-Return".to_owned(), spawn(TERM));
         h.insert("M-S-q".to_owned(), exit());
-        h.insert("M-F".to_owned(), toggle_fullscreen());
+        h.insert("M-F".to_owned(), toggle_fullscreen());*/
         h.insert(
-            "M-z".to_owned(),
+            "M-n".to_owned(),
             key_handler(move |_, _| spawn_with_args(FLAMESHOT, &FLAMESHOT_FULL_ARGS)),
         );
         h.insert(
-            "M-x".to_owned(),
+            "M-p".to_owned(),
             key_handler(move |_, _| spawn_with_args(FLAMESHOT, &FLAMESHOT_GUI_ARGS)),
         );
 
