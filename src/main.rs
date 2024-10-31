@@ -83,6 +83,7 @@ fn main() -> Result<()> {
 
     let mut cfg = add_ewmh_hooks(Config::default());
     cfg.focused_border = "#d5c4a1".try_into().expect("invalid border color");
+    cfg.border_width = 1;
     cfg.compose_or_set_layout_hook(SpacingHook {
         outer_px: 0,
         inner_px: 0,
