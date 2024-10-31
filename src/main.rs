@@ -82,6 +82,7 @@ fn main() -> Result<()> {
         .init();
 
     let mut cfg = add_ewmh_hooks(Config::default());
+    cfg.focused_border = 0xd5c4a1.into();
     cfg.compose_or_set_layout_hook(SpacingHook {
         outer_px: 0,
         inner_px: 0,
