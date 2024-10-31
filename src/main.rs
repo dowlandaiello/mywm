@@ -23,10 +23,10 @@ use std::collections::HashMap;
 use tracing_subscriber::{self, prelude::*};
 
 const TERM: &str = "alacritty";
-
 const LAUNCHER: &str = "mydmenu_run";
-
 const TAGS: [&str; 9] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const FLAMESHOT_FULL: &str = "flameshot full -p ~/Pictures/screenshots";
+const FLAMESHOT_GUI: &str = "flameshot gui -p ~/Pictures/screenshots";
 
 fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
     let mut raw_bindings = {
@@ -40,6 +40,8 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
         h.insert("C-S-space".to_owned(), spawn(LAUNCHER));
         h.insert("M-Return".to_owned(), spawn(TERM));
         h.insert("M-S-q".to_owned(), exit());
+        h.insert("M-Print".to_owned(), spawn(FLAMESHOT_FULL));
+        h.insert("M-S-Print".to_owned(), spawn(FLAMESHOT_GUI));
 
         h
     };
