@@ -1,8 +1,11 @@
 use penrose::{
-    builtin::actions::{
-        exit,
-        floating::{sink_focused, MouseDragHandler, MouseResizeHandler},
-        modify_with, spawn,
+    builtin::{
+        actions::{
+            exit,
+            floating::{sink_focused, MouseDragHandler, MouseResizeHandler},
+            modify_with, spawn,
+        },
+        hooks::SpacingHook,
     },
     core::{
         bindings::{
@@ -78,14 +81,17 @@ fn main() -> Result<()> {
         .finish()
         .init();
 
+    let mut cfg = add_ewmh_hooks(Config::default());
+    cfg.compose_or_set_layout_hook(SpacingHook {
+        outer_px: 0,
+        inner_px: 0,
+        top_px: 0,
+        bottom_px: 30,
+    });
+
     let conn = RustConn::new()?;
     let key_bindings = parse_keybindings_with_xmodmap(raw_key_bindings())?;
-    let wm = WindowManager::new(
-        add_ewmh_hooks(Config::default()),
-        key_bindings,
-        mouse_bindings(),
-        conn,
-    )?;
+    let wm = WindowManager::new(cfg, key_bindings, mouse_bindings(), conn)?;
 
     wm.run()
 }
