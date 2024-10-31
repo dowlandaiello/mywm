@@ -14,7 +14,7 @@ use penrose::{
         },
         Config, WindowManager,
     },
-    extensions::hooks::ewmh::add_ewmh_hooks,
+    extensions::{actions::toggle_fullscreen, hooks::ewmh::add_ewmh_hooks},
     map,
     util::spawn_with_args,
     x11rb::RustConn,
@@ -42,6 +42,7 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
         h.insert("C-S-space".to_owned(), spawn(LAUNCHER));
         h.insert("M-Return".to_owned(), spawn(TERM));
         h.insert("M-S-q".to_owned(), exit());
+        h.insert("M-F".to_owned(), toggle_fullscreen());
         h.insert(
             "Print".to_owned(),
             key_handler(move |_, _| spawn_with_args(FLAMESHOT, &FLAMESHOT_FULL_ARGS)),
