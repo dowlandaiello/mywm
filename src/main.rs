@@ -11,6 +11,7 @@ use penrose::{
         },
         Config, WindowManager,
     },
+    extensions::hooks::ewmh::add_ewmh_hooks,
     map,
     x11rb::RustConn,
     Result,
@@ -19,6 +20,8 @@ use std::collections::HashMap;
 use tracing_subscriber::{self, prelude::*};
 
 const TERM: &str = "alacritty";
+
+const LAUNCHER: &str = "mydmenu_run";
 
 const TAGS: [&str; 9] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
@@ -31,7 +34,7 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
         h.insert("M-S-p".to_owned(), modify_with(|cs| cs.swap_up()));
         h.insert("M-S-c".to_owned(), modify_with(|cs| cs.kill_focused()));
         h.insert("M-Tab".to_owned(), modify_with(|cs| cs.toggle_tag()));
-        h.insert("C-S-space".to_owned(), spawn("dmenu_run"));
+        h.insert("C-S-space".to_owned(), spawn(LAUNCHER));
         h.insert("M-Return".to_owned(), spawn(TERM));
         h.insert("M-S-q".to_owned(), exit());
 
@@ -77,7 +80,12 @@ fn main() -> Result<()> {
 
     let conn = RustConn::new()?;
     let key_bindings = parse_keybindings_with_xmodmap(raw_key_bindings())?;
-    let wm = WindowManager::new(Config::default(), key_bindings, mouse_bindings(), conn)?;
+    let wm = WindowManager::new(
+        add_ewmh_hooks(Config::default()),
+        key_bindings,
+        mouse_bindings(),
+        conn,
+    )?;
 
     wm.run()
 }
